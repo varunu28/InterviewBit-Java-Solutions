@@ -9,26 +9,32 @@
  */
 public class Solution {
     public ArrayList<Interval> merge(ArrayList<Interval> intervals) {
-        intervals.sort((i1,i2) -> i1.start - i2.start);
-
-        for (int i = 0; i < intervals.size() - 1; i++) {
-            Interval first = intervals.get(i);
-            Interval second = intervals.get(i + 1);
-
-            if (first.start <= second.start && first.end >= second.end) {
-                intervals.remove(i + 1);
-                i--;
+        
+        Collections.sort(intervals,new Comparator<Interval>(){
+            @Override
+            public int compare(Interval a, Interval b)
+            {
+                return a.start-b.start;
             }
-
-            if (second.start < first.end && first.end < second.end) {
-                Interval temp = new Interval(first.start, second.end);
-                intervals.remove(i + 1);
-                intervals.set(i, temp);
-                i--;
+        });
+        ArrayList<Interval>res=new ArrayList<Interval>();
+        int start=intervals.get(0).start;
+        int end=intervals.get(0).end;
+        for(int i=1;i<intervals.size();i++)
+        {
+            if(intervals.get(i).start<=end)
+            {
+                end=Math.max(intervals.get(i).end,end);
             }
-
+            else
+            {
+                res.add(new Interval(start,end));
+                start=intervals.get(i).start;
+                end=intervals.get(i).end;
+            }
         }
-
-        return intervals;
+        res.add(new Interval(start,end));
+        
+        return res;
     }
 }
