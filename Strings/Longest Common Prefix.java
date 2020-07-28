@@ -1,25 +1,32 @@
 public class Solution {
-    public String longestCommonPrefix(ArrayList<String> A) {
-        A.sort((s1, s2) -> s1.length() - s2.length());
-
-        String word = A.get(0);
-        return getMaxLengthWord(word, A);
+  public String longestCommonPrefix(ArrayList<String> A) {
+    if (A.size() == 0) {
+      return "";
     }
-
-    public String getMaxLengthWord(String s, ArrayList<String> A) {
-        while (!s.isEmpty()) {
-            boolean flag = true;
-            for (String str : A) {
-                if (!str.startsWith(s)) {
-                    flag = false;
-                    break;
-                }
-            }
-
-            if (flag) break;
-            s = s.substring(0, s.length()-1);
+    int minLength = Integer.MAX_VALUE;
+    int minLengthIdx = 0;
+    for (int i = 0; i < A.size(); i++) {
+      if (A.get(i).length() < minLength) {
+        minLength = A.get(i).length();
+        minLengthIdx = i;
+      }
+    }
+    String targetStr = A.get(minLengthIdx);
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < targetStr.length(); i++) {
+      boolean mismatch = false;
+      for (String str : A) {
+        if (str.charAt(i) != targetStr.charAt(i)) {
+          mismatch = true;
+          break;
         }
-
-        return s;
+      }
+      if (mismatch) {
+        break;
+      }
+      sb.append(targetStr.charAt(i));
     }
+    return sb.length() == 0 ? "" : sb.toString();
+  }
 }
+
