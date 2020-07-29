@@ -7,17 +7,18 @@
  * }
  */
 public class Solution {
-    public ListNode deleteDuplicates(ListNode A) {
-        ListNode curr = A;
-        while (curr.next != null) {
-            if (curr.next.val == curr.val) {
-                curr.next = curr.next.next;
-            }
-            else {
-                curr = curr.next;
-            }
-        }
-        
-        return A;
+  public ListNode deleteDuplicates(ListNode A) {
+    ListNode curr = A;
+    while (curr != null) {
+      int val = curr.val;
+      ListNode temp = curr;
+      while (temp != null && temp.val == val) {
+        temp = temp.next;
+      }
+      curr.next = temp;
+      curr = curr.next;
     }
+    return A;
+  }
 }
+

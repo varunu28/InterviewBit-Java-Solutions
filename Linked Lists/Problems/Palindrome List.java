@@ -7,49 +7,41 @@
  * }
  */
 public class Solution {
-    public int lPalin(ListNode head) {
-        if (head == null || head.next == null) return 1;
-        int l = 0;
-        ListNode curr = head;
-        
-        while (curr != null) {
-            l++;
-            curr = curr.next;
-        }
-        
-        int i = 1;
-        curr = head;
-        
-        while (i < l/2) {
-            curr = curr.next;
-            i++;
-        }
-        
-        ListNode mid = reverse(curr.next);
-        
-        curr = head;
-        
-        while(mid != null) {
-            if (curr.val != mid.val) return 0;
-            curr = curr.next;
-            mid = mid.next;
-        }
-        
-        return 1;
+  public int lPalin(ListNode A) {
+    int length = 0;
+    ListNode curr = A;
+    while (curr != null) {
+      curr = curr.next;
+      length++;
     }
-    
-    public ListNode reverse(ListNode head) {
-        ListNode curr = head;
-        ListNode prev = null;
-        ListNode next = null;
-        
-        while(curr != null) {
-            next = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = next;
-        }
-        
-        return prev;
+    curr = A;
+    int count = 1;
+    while (count < length / 2) {
+      count++;
+      curr = curr.next;
     }
+    ListNode rev = reverse(curr.next);
+    curr = A;
+    while (curr != null && rev != null) {
+      if (curr.val != rev.val) {
+        return 0;
+      }
+      curr = curr.next;
+      rev = rev.next;
+    }
+    return 1;
+  }
+
+  private ListNode reverse(ListNode node) {
+    ListNode curr = node;
+    ListNode prev = null;
+    ListNode next = null;
+    while (curr != null) {
+      next = curr.next;
+      curr.next = prev;
+      prev = curr;
+      curr = next;
+    }
+    return prev;
+  }
 }
