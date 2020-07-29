@@ -1,21 +1,17 @@
 public class Solution {
-    public static void merge(ArrayList<Integer> a, ArrayList<Integer> b) {
-	    int i = 0;
-	    int j = 0;
-
-	    while (i < a.size() && j < b.size()) {
-	        if (a.get(i) > b.get(j)) {
-                a.add(i, b.get(j));
-                i++;
-                j++;
-            } else {
-                i++;
-            }
-        }
-
-        while (j < b.size()) {
-	        a.add(b.get(j));
-	        j++;
-        }
-	}
+  public void merge(ArrayList<Integer> a, ArrayList<Integer> b) {
+    int idxA = 0;
+    int idxB = 0;
+    while (idxA < a.size() && idxB < b.size()) {
+      if (a.get(idxA) > b.get(idxB)) {
+        a.add(idxA, b.get(idxB));
+        idxB++;
+      }
+      idxA++;
+    }
+    while (idxB < b.size()) {
+      a.add(b.get(idxB++));
+    }
+  }
 }
+
