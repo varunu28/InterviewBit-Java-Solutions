@@ -1,33 +1,18 @@
 public class Solution {
-    public int colorful(int A) {
-        Set<Integer> set = new HashSet<>();
-        String a = String.valueOf(A);
-        
-        for (int i=0;i<a.length();i++) {
-            for (int j=i;j<=a.length(); j++) {
-                String numStr = a.substring(i,j);
-                
-                if (numStr.length() > 0) {
-                    int mul = findProd(Integer.parseInt(numStr));
-                    if (set.contains(mul)) {
-                        return 0;
-                    }
-                    
-                    set.add(mul);
-                }
-            }
+  public int colorful(int A) {
+    Set<Integer> set = new HashSet<>();
+    String s = String.valueOf(A);
+    for (int i = 0; i < s.length(); i++) {
+      int prod = 1;
+      for (int j = i; j < s.length(); j++) {
+        prod *= Character.getNumericValue(s.charAt(j));
+        if (set.contains(prod)) {
+          return 0;
         }
-        
-        return 1;
+        set.add(prod);
+      }
     }
-    
-    public int findProd(int s) {
-        int prd = 1;
-        while (s>0) {
-            prd *= s%10;
-            s /= 10;
-        }
-        
-        return prd;
-    }
+    return 1;
+  }
 }
+
