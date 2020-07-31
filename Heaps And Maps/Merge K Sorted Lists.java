@@ -7,34 +7,25 @@
  * }
  */
 public class Solution {
-    public ListNode mergeKLists(ArrayList<ListNode> a) {
-        PriorityQueue<ListNode> pq = new PriorityQueue<>(new Comparator<ListNode>() {
-            @Override
-            public int compare(ListNode o1, ListNode o2) {
-                return o1.val - o2.val;
-            }
-        });
-        
-        for (ListNode node : a) {
-            if (node != null) {
-                pq.add(node);
-            }
-        }
-        
-        ListNode node = new ListNode(-1);
-        ListNode curr = node;
-        
-        while (!pq.isEmpty()) {
-            ListNode temp = pq.remove();
-            curr.next = new ListNode(temp.val);
-            curr = curr.next;
-            
-            if (temp.next != null) {
-                pq.add(temp.next);
-            }
-        }
-        
-        return node.next;
+  public ListNode mergeKLists(ArrayList<ListNode> a) {
+    PriorityQueue<ListNode> pq = new PriorityQueue<>(new Comparator<ListNode>(){
+      public int compare(ListNode n1, ListNode n2) {
+        return n1.val - n2.val;
+      }
+    });
+    pq.addAll(a);
+    ListNode dummy = new ListNode(-1);
+    ListNode curr = dummy;
+    while (!pq.isEmpty()) {
+      ListNode removed = pq.poll();
+      curr.next = new ListNode(removed.val);
+      curr = curr.next;
+      removed = removed.next;
+      if (removed != null) {
+        pq.add(removed);
+      }
     }
+    return dummy.next;
+  }
 }
 
