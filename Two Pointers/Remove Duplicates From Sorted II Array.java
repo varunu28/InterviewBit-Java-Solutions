@@ -1,38 +1,20 @@
 public class Solution {
-    public static int removeDuplicates(ArrayList<Integer> a) {
-	    if (a.size() <= 1) return a.size();
-
-	    int i = 1;
-	    int j = 1;
-	    boolean twice = false;
-
-	    while (i<a.size()) {
-	        if (!a.get(i).equals(a.get(i - 1))) {
-	            a.set(j, a.get(i));
-	            j++;
-	            twice = false;
-	        }
-	        else {
-	            if (!twice) {
-	                a.set(j, a.get(i));
-	                twice = true;
-	                j++;
-	            }
-	        }
-	        i++;
-	    }
-
-	    ArrayList<Integer> itemsToKeep = new ArrayList<>();
-	    i = 0;
-	    while (i<j) {
-	        itemsToKeep.add(a.get(i++));
-        }
-
-        a.clear();
-	    for (int num : itemsToKeep) {
-	        a.add(num);
-        }
-
-	    return a.size();
-	}
+  public int removeDuplicates(ArrayList<Integer> a) {
+    int start = 0;
+    int end = 0;
+    int n = a.size();
+    while (end < n) {
+      int num = a.get(end);
+      int count = 0;
+      while (end < n && a.get(end) == num) {
+        end++;
+        count++;
+      }
+      for (int i = 0; i < Math.min(count, 2); i++) {
+        a.set(start++, num);
+      }
+    }
+    return start;
+  }
 }
+

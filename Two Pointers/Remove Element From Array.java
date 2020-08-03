@@ -1,19 +1,15 @@
 public class Solution {
-	public int removeElement(ArrayList<Integer> a, int b) {
-	    int i = 0;
-	    int j = 0;
-	    
-	    while (i<a.size()) {
-	        if (a.get(i) != b) {
-	            if (i != j) {
-	                a.set(j, a.get(i));
-	                a.set(i, b);
-	            }
-	            j++;
-	        }
-	        i++;
-	    }
-	    
-	    return j;
-	}
+    public int removeElement(ArrayList<Integer> a, int b) {
+        int start = 0;
+        int end = 0;
+        int n = a.size();
+        while (end < n) {
+            if (a.get(end) != b) {
+                a.set(start++, a.get(end));
+            }
+            end++;
+        }
+        return start;
+    }
 }
+

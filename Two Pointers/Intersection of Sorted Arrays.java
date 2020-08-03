@@ -1,23 +1,22 @@
 public class Solution {
-    // DO NOT MODIFY THE LIST. IT IS READ ONLY
-    public ArrayList<Integer> intersect(final List<Integer> A, final List<Integer> B) {
-        int i = 0;
-        int j = 0;
-        ArrayList<Integer> ans = new ArrayList<>();
-        while (i<A.size() && j<B.size()) {
-            if (A.get(i).equals(B.get(j))) {
-                ans.add(A.get(i));
-                i++;
-                j++;
-            }
-            else if (A.get(i) > B.get(j)) {
-                j++;
-            }
-            else {
-                i++;
-            }
-        }
-        
-        return ans;
+  // DO NOT MODIFY THE LIST. IT IS READ ONLY
+  public ArrayList<Integer> intersect(final List<Integer> A, final List<Integer> B) {
+    int startA = 0;
+    int startB = 0;
+    ArrayList<Integer> list = new ArrayList<>();
+    while (startA < A.size() && startB < B.size()) {
+      if (A.get(startA).equals(B.get(startB))) {
+        list.add(A.get(startA));
+        startA++;
+        startB++;
+      }
+      else if (A.get(startA) < B.get(startB)) {
+        startA++;
+      }
+      else {
+        startB++;
+      }
     }
+    return list;
+  }
 }
