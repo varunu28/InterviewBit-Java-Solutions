@@ -1,26 +1,32 @@
 public class Solution {
-    public static Stack<String> stack;
-    
-    public static String simplifyPath(String A) {
-        stack = new Stack<>();
-        String[] args = A.trim().split("/");
-        for (String s : args) {
-            if (s.equals("..")) {
-                if (!stack.isEmpty()) {
-                    stack.pop();
+    public String simplifyPath(String A) {
+        Stack<String> stack = new Stack<>();
+        StringBuilder sb = new StringBuilder();
+        int idx = 0;
+        int n = A.length();
+        while (idx < n) {
+            if (A.charAt(idx) == '/') {
+                idx++;
+                while (idx < n && A.charAt(idx) != '/') {
+                    sb.append(A.charAt(idx++));
+                }
+                String s = sb.toString();
+                sb.setLength(0);
+                if (s.length() > 0) {
+                    if (s.equals("..") && !stack.isEmpty()) {
+                        stack.pop();
+                    }
+                    else if (!(s.equals("..") || s.equals("."))) {
+                        stack.push(s);
+                    }
                 }
             }
-            else if(!s.isEmpty() && !s.equals(".")) {
-                stack.push(s);
-            }
         }
-        
-        StringBuilder sb = new StringBuilder("");
-        while(!stack.isEmpty()) {
-            sb.insert(0,stack.pop());
-			sb.insert(0, "/");
+        while (!stack.isEmpty()) {
+            sb.insert(0, stack.pop());
+            sb.insert(0, "/");
         }
-        
-        return sb.length() != 0 ? sb.toString() : "/";
+        return sb.length() > 0 ? sb.toString() : "/";
     }
 }
+

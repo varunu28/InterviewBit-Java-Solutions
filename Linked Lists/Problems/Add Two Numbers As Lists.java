@@ -7,48 +7,19 @@
  * }
  */
 public class Solution {
-    public ListNode addTwoNumbers(ListNode A, ListNode B) {
-        ListNode ans = new ListNode(0);
-        ListNode curr = ans;
-        int temp = 0;
-        
-        int carry = 0 ;
-        while(A != null && B != null) {
-            temp = A.val + B.val + carry;
-            carry = temp > 9 ? 1 : 0;
-            temp = temp%10;
-            
-            curr.next =  new ListNode(temp);
-            curr = curr.next;
-            A = A.next;
-            B = B.next;
-        }
-        
-        while (A != null) {
-            temp = A.val + carry;
-            carry = temp > 9 ? 1 : 0;
-            temp = temp%10;
-            
-            curr.next =  new ListNode(temp);
-            curr = curr.next;
-            A = A.next;
-        }
-        
-        while (B != null) {
-            temp = B.val + carry;
-            carry = temp > 9 ? 1 : 0;
-            temp = temp%10;
-            
-            curr.next =  new ListNode(temp);
-            curr = curr.next;
-            B = B.next;
-        }
-        
-        if (carry != 0) {
-            curr.next =  new ListNode(carry);
-            curr = curr.next;
-        }
-        
-        return ans.next;
+  public ListNode addTwoNumbers(ListNode A, ListNode B) {
+    ListNode dummy = new ListNode(-1);
+    ListNode curr = dummy;
+    int carry = 0;
+    while (A != null || B != null || carry > 0) {
+      int temp = carry + (A != null ? A.val : 0) + (B != null ? B.val : 0);
+      carry = temp > 9 ? 1 : 0;
+      temp %= 10;
+      curr.next = new ListNode(temp);
+      curr = curr.next;
+      A = A != null ? A.next : A;
+      B = B != null ? B.next : B;
     }
+    return dummy.next;
+  }
 }
