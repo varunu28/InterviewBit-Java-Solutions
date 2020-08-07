@@ -1,20 +1,32 @@
 public class Solution {
-    // DO NOT MODIFY THE LIST. IT IS READ ONLY
-    public int trap(final List<Integer> A) {
-        int ans = 0, current = 0;
-        Stack<Integer> st = new Stack<>();
-        while (current < A.size()) {
-            while (!st.empty() && A.get(current) > A.get(st.peek())) {
-                int top = st.peek();
-                st.pop();
-                if (st.empty())
-                    break;
-                int distance = current - st.peek() - 1;
-                int bounded_height = Math.min(A.get(current), A.get(st.peek())) - A.get(top);
-                ans += distance * bounded_height;
-            }
-            st.push(current++);
+  // DO NOT MODIFY THE LIST. IT IS READ ONLY
+  public int trap(final List<Integer> A) {
+    int ans = 0;
+    int left = 0;
+    int right = A.size() - 1;
+    int leftMax = 0;
+    int rightMax = 0;
+    while (left < right) {
+      if (A.get(left) < A.get(right)) {
+        if (A.get(left) > leftMax) {
+          leftMax = A.get(left);
         }
-        return ans;
+        else {
+          ans += leftMax - A.get(left);
+        }
+        left++;
+      }
+      else {
+        if (A.get(right) > rightMax) {
+          rightMax = A.get(right);
+        }
+        else {
+          ans += rightMax - A.get(right);
+        }
+        right--;
+      }
     }
+    return ans;
+  }
 }
+
