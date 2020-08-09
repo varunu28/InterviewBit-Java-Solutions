@@ -1,39 +1,25 @@
 public class Solution {
-    public ArrayList<ArrayList<Integer>> combinationSum(ArrayList<Integer> A, int B) {
-        ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
-        if (A.size() == 0) {
-            return ans;
-        }
+  public ArrayList<ArrayList<Integer>> combinationSum(ArrayList<Integer> A, int B) {
+    ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
+    Collections.sort(A);
+    helper(A, ans, new ArrayList<>(), B, 0);
+    return new ArrayList<>(ans);
+  }
 
-        Collections.sort(A);
-        ArrayList<Integer> temp = new ArrayList<>();
-        combinationSumHelper(A, B, ans, temp, 0);
-
-        return ans;
+  private void helper(ArrayList<Integer> a, ArrayList<ArrayList<Integer>> ans, ArrayList<Integer> curr, int b, int idx) {
+    if (b < 0) {
+      return;
     }
-
-    private void combinationSumHelper(ArrayList<Integer> a, int b, ArrayList<ArrayList<Integer>> ans, ArrayList<Integer> temp, int start) {
-        if (b < 0) {
-            return;
-        }
-
-        if (b == 0) {
-            if (!ans.contains(temp)) {
-                ans.add(new ArrayList<>(temp));
-            }
-        }
-        else {
-            for (int i = start; i < a.size(); i++) {
-                // Choose
-                temp.add(a.get(i));
-
-                // Explore
-                combinationSumHelper(a, b - a.get(i), ans, temp, i);
-
-                // Un-choose
-                temp.remove(temp.size() - 1);
-            }
-        }
+    if (b == 0) {
+      if(!ans.contains(curr)) {
+        ans.add(new ArrayList<>(curr));
+      }
+      return;
     }
+    for (int i = idx; i < a.size(); i++) {
+      curr.add(a.get(i));
+      helper(a, ans, curr, b - a.get(i), i);
+      curr.remove(curr.size() - 1);
+    }
+  }
 }
-

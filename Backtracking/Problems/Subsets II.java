@@ -1,31 +1,24 @@
 public class Solution {
-    public static ArrayList<ArrayList<Integer>> subsetsWithDup(ArrayList<Integer> a) {
-        ArrayList<ArrayList<Integer>> output = new ArrayList<ArrayList<Integer>>();
-        output.add(new ArrayList<Integer>());
-        if (a.size() == 0) {
-            return output;
-        }
+  public ArrayList<ArrayList<Integer>> subsetsWithDup(ArrayList<Integer> A) {
+    ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
+    Collections.sort(A);
+    helper(A, new ArrayList<>(), ans, 0);
+    return ans;
+  }
 
-        Collections.sort(a);
-        generate(a, output, new ArrayList<Integer>(), 0);
-        return output;
+  private void helper(ArrayList<Integer> a, ArrayList<Integer> curr, ArrayList<ArrayList<Integer>> ans, int idx) {
+    ans.add(new ArrayList<>(curr));
+    if (idx >= a.size()) {
+      return;
     }
-
-    private static void generate(ArrayList<Integer> a, ArrayList<ArrayList<Integer>> output, ArrayList<Integer> temp, int index) {
-        for (int i = index; i < a.size(); i++) {
-            // Choose
-            temp.add(a.get(i));
-
-            if (!output.contains(temp)) {
-                output.add(new ArrayList<Integer>(temp));
-            }
-
-            // Explore
-            generate(a, output, temp, i+1);
-
-            // Un-choose
-            temp.remove(temp.size() - 1);
-        }
+    for (int i = idx; i < a.size(); i++) {
+      if (i > idx && a.get(i).equals(a.get(i - 1))) {
+        continue;
+      }
+      curr.add(a.get(i));
+      helper(a, curr, ans, i + 1);
+      curr.remove(curr.size() - 1);
     }
+  }
 }
 
