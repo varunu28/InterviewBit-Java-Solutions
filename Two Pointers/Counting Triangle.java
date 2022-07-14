@@ -6,13 +6,13 @@ public class Solution {
         int mod = 1000000007;
         Collections.sort(A);
         
-        for(int i=n-1; i>=0; i--) {
+        for(int i=n-1; i>1; i--) {
             int j = 0;
             int k = i-1;
             while (j<k) {
                 long sum = A.get(j) + A.get(k);
                 if (sum > A.get(i)) {
-                    res = (res + (k-j)%mod)%mod;
+                    res = (res + (k-j))%mod;
                     k--;
                 }
                 else {
