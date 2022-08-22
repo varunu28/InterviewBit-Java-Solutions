@@ -1,21 +1,14 @@
 public class Solution {
     // DO NOT MODIFY THE LIST. IT IS READ ONLY
     public static int singleNumber(final List<Integer> A) {
-        Map<Integer, Integer> map = new HashMap<>();
-
-        for (int num : A) {
-            map.put(num, map.getOrDefault(num, 0) + 1);
-        }
-
-        int ans = -1;
-
-        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-            if (entry.getValue() == 1) {
-                ans = entry.getKey();
-                break;
+        int sum = 0;
+        for(int i=0;i<32;i++){
+            int bitSum =0;
+            for(int j=0;j<A.size();j++){
+                bitSum += ((A.get(j) >> i) & 1);
             }
+            sum += (bitSum%3) * Math.pow(2, i);
         }
-
-        return ans;
+        return sum;
     }
 }
